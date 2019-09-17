@@ -85,11 +85,10 @@ def return_tweet(autorizacao, quantidade):
                 novas_mensagens +=1
                 
             else:
-                print("[***] Tweet repetido".format(i))
-                repeater += 1
-            print('\t -=-=-=-=-= aguardando 4.5 segundos =-=-=-=-=-\n\n'.format(i))
+                print("[***] Tweet repetido")
+            print("\t -=-=-=-=-= aguardando 4.5 segundos =-=-=-=-=-\n\n")
             time.sleep(4.5)
-            if i >= quantidade or repeater >= 10:
+            if i >= quantidade:
                 break
         print("[Fim do Programa]")
 
@@ -106,5 +105,3 @@ def remove_http(lista_de_listas):
             lista[i].remove("http")
 
     return lista
-
-download_tweets(200, auth)
