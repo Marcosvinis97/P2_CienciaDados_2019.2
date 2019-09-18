@@ -111,6 +111,4 @@ def get_text(autorizacao):
         break
     return new_msg["Tweet Text"]
 
-def get_msg():
-    return { "texto": script.get_text(auth),
-              "classificação": resultado(list( script.get_text(auth) ),0) }
+
