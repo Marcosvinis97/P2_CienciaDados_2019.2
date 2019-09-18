@@ -95,9 +95,8 @@ def return_tweet(quantidade, autorizacao):
 def get_text(autorizacao):
     """return_tweet(autorizacao, quantidade)"""
     api = tweepy.API(autorizacao)
-    i = 0
     lista_vazia = []
-    for msg in tweepy.Cursor(api.search, q="{0} -filter:retweets".format("depressao"), lang='pt', tweet_mode="extended", count=1).items():
+    for msg in tweepy.Cursor(api.search, q="{0} -filter:retweets".format("depressao"), lang='pt', tweet_mode="extended").items():
         new_msg = { 
             # 'User Name': msg.user.name,
             #         'Tweet Created At': msg.created_at,
@@ -109,5 +108,9 @@ def get_text(autorizacao):
                     # 'Retweets':msg.retweet_count
                     }
         lista_vazia.append(new_msg["Tweet Text"])
-        i += 1
+        break
     return new_msg["Tweet Text"]
+
+def get_msg():
+    return { "texto": script.get_text(auth),
+              "classificação": resultado(list( script.get_text(auth) ),0) }
