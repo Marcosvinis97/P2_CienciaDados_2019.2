@@ -19,7 +19,7 @@ auth.set_access_token(data['access_token'], data['access_token_secret'])
 
 
 
-def download_tweets(quantidade, autorizacao):
+def feed_tweets(quantidade, autorizacao):
     planilha = pd.read_excel('DataBase.xlsx', "Sheet1")
     #Cria um objeto para a captura
     api = tweepy.API(auth)
@@ -58,7 +58,7 @@ def download_tweets(quantidade, autorizacao):
     print("{} new messages in DataBase.xlsx".format(novas_mensagens))
     return True
     
-def return_tweet(autorizacao, quantidade):
+def return_tweet(quantidade, autorizacao):
     """return_tweet(autorizacao, quantidade)"""
     api = tweepy.API(autorizacao)
     i = 0
@@ -92,16 +92,22 @@ def return_tweet(autorizacao, quantidade):
                 break
         print("[Fim do Programa]")
 
-
-def remove_http(lista_de_listas):
-    lista = lista_de_listas
-    for i in range(len(lista)):
-        for j in range(len(lista[i])):
-            if 'HTTP' in lista[i][j].capitalize():
-                lista[i][j] = "http"
-    
-    for i in range(len(lista)):
-        while lista[i].count("http") != 0:
-            lista[i].remove("http")
-
-    return lista
+def get_text(autorizacao):
+    """return_tweet(autorizacao, quantidade)"""
+    api = tweepy.API(autorizacao)
+    i = 0
+    lista_vazia = []
+    for msg in tweepy.Cursor(api.search, q="{0} -filter:retweets".format("depressao"), lang='pt', tweet_mode="extended", count=1).items():
+        new_msg = { 
+            # 'User Name': msg.user.name,
+            #         'Tweet Created At': msg.created_at,
+                    'Tweet Text': msg.full_text.lower(),
+                    # 'Relevância': '',
+                    # 'User Location': msg.user.location,
+                    # 'Phone Type': msg.source,
+                    # 'Favorite Count': msg.favorite_count,
+                    # 'Retweets':msg.retweet_count
+                    }
+        lista_vazia.append(new_msg["Tweet Text"])
+        i += 1
+    return new_msg["Tweet Text"]
